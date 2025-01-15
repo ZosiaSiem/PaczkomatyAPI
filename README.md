@@ -140,285 +140,263 @@ Expected Response
 }
 ```
 
-## Logout Endpoint
+## Kurier Endpoints
+### GET All kurierzy
 ```js
-GET /api/auth/logout
-```
-Expected Response 
-```js
+GET http://localhost:3000/kurierzy
+
+Expected Response: returns array of kurierzy in database 
 {
-    "message": "successfully logged out"
+    "wiadomość": "Liszta wszystkich kurierów",
+    "kurierzy": [
+        {
+            "_id": "677eecaf3fdb91fe83c2cc83",
+            "imie": "Julia",
+            "nazwisko": "Kowalska",
+            "__v": 0
+        }
+    ]
 }
 ```
 
-## Campaign Endpoints
-### GET All campaigns
+### POST kurierzy
 ```js
-GET /api/campaigns
-
-Expected Response: returns array of campaigns in database 
-
-[
-    {
-        "id": 1,
-        "name": "Project Z",
-        "user_id": 1,
-        "imageURL": 'https://www.comtix.com/wp-content/uploads/2019/08/elections-campaign-1024x791.jpg'
-    }
-]
-```
-
-### POST campaign
-```js
-POST /api/campaigns
+POST http://localhost:3000/kurierzy
 
 Expected Body: 
-    {
-        "name": "test 123",
-        "user_id": 1,
-        "imageURL": 'https://www.comtix.com/wp-content/uploads/2019/08/elections-campaign-1024x791.jpg',
-        "description": "hellooooo world"
-    }
-
-Expected Response: returns object of created campaign in database 
+{
+    imie: String,
+    nazwisko: String
+})
+Expected Response: returns object of created kurierzy in database 
 
 {
-    "newCampaign": {
-        "id": 1,
-        "name": "testing 123",
-        "user_id": 1,
-        "imageURL": "https://www.comtix.com/wp-content/uploads/2019/08/elections-campaign-1024x791.jpg",
-        "prediction": null
-    },
-    "predictions": {
-        "prediction": 0
+    "wiadomość": "Nowy kurier został dodany!",
+    "kurier": {
+        "_id": "678819627e7d7c268866b9cc",
+        "__v": 0,
+	imie: "Ania", //name example
+	nazwisko: "Kowalska", //surname example
     }
 }
 ```
 
-### PUT Campaign By ID
+### PUT kurierzy By ID
 ```js
-PUT /api/campaigns/:id
+PUT http://localhost:3000/kurierzy/677eecaf3fdb91fe83c2cc83
 
-Expected Body:
-    {
-        "name": "test123" //updated field
-    }
+{
+    "wiadomość": "Nie odnaleziono"
+}
 
 Expected Response: updates campaign specified by :id
 
-    [
-        {
-            "updated": 1
-        }
-    ]
+PUT http://localhost:3000/kurierzy/id
+{
+    "wiadomość": "Zaktualizowano kuriera o numerze 677eecaf3fdb91fe83c2cc83",
+    "updatedKurier": {
+        "_id": "677eecaf3fdb91fe83c2cc83",
+        "imie": "Julia",
+        "nazwisko": "Kowalska",
+        "__v": 0
+    }
+}
+
 ```
 
-### DELETE campaign by ID
+### DELETE kurierzy by ID
 ```js
-DELETE /api/campaigns/:id
+DELETE  http://localhost:3000/kurierzy/id
+
+Expected Response: deletes kurierzy specified by :id
+
+Expected Response: 
+    {
+    "wiadomość": "Usunięto kuriera o numerze 677eecaf3fdb91fe83c2cc83"
+}
+```
+
+## paczkomaty Endpoints
+### GET All paczkomaty
+```js
+GET http://localhost:3000/paczkomaty
+
+Expected Response: returns array of paczkomaty in database 
+{
+    "wiadomość": "Lista wszystkich paczkomatów",
+    "paczkomaty": [
+        {
+            "_id": "677eed933fdb91fe83c2cc8b",
+            "miasto": "Płock",
+            "adres": "Klonowa 1",
+            "pojemnosc": 20,
+            "__v": 0
+        }
+    ]
+}
+```
+
+### POST paczkomaty
+```js
+POST http://localhost:3000/paczkomaty
+
+Expected Body: 
+{
+    miasto: String,
+    adres: String,
+    pojemnosc: Number
+}
+Expected Response: returns object of created kurierzy in database 
+
+{
+    "wiadomość": "Nowy paczkomat został dodany!",
+    "paczkomat": {
+        "_id": "67881d0e7e7d7c268866b9d5",
+        "miasto": "Puck", // city example
+        "adres": "Wolna", // adress example
+        "pojemnosc": 10, // capacity example
+        "__v": 0
+    }
+}
+```
+
+### PUT paczkomaty By ID
+```js
+PUT http://localhost:3000/paczkomaty
+
+{
+    "wiadomość": "Nie odnaleziono"
+}
+
+Expected Response: updates campaign specified by :id
+
+PUT http://localhost:3000/paczkomaty/67881d0e7e7d7c268866b9d5
+{
+    "wiadomość": "Zaktualizowano paczkomat o 67881d0e7e7d7c268866b9d5",
+    "updatedPaczkomat": {
+        "_id": "67881d0e7e7d7c268866b9d5",
+        "miasto": "Puck",
+        "adres": "Wolna",
+        "pojemnosc": 10,
+        "__v": 0
+    }
+}
+
+```
+
+### DELETE paczkomaty by ID
+```js
+DELETE  http://localhost:3000/paczkomaty/67881d0e7e7d7c268866b9d5
+
+Expected Response: deletes paczkomaty specified by :id
+
+Expected Response: 
+{
+    "wiadomość": "Usunięto paczkomat o numerze 67881d0e7e7d7c268866b9d5"
+}
+```
+
+## paczki Endpoints
+### GET All paczki
+```js
+GET http://localhost:3000/paczki
+
+Expected Response: returns array of paczki in database 
+{
+    "wiadomość": "Lista wszystkich przesyłek",
+    "paczki": [
+        {
+            "_id": "677eef763fdb91fe83c2cca0",
+            "kodPaczki": "123",
+            "kurier": null,
+            "paczkomat": {
+                "_id": "677eed933fdb91fe83c2cc8b",
+                "miasto": "Płock",
+                "adres": "Klonowa 1"
+            },
+            "status": "dostarczona",
+            "__v": 0
+        },
+        {
+            "_id": "677f7827382767cc994affd0",
+            "kodPaczki": "ABC123",
+            "kurier": null,
+            "paczkomat": {
+                "_id": "677eed933fdb91fe83c2cc8b",
+                "miasto": "Płock",
+                "adres": "Klonowa 1"
+            },
+            "status": "dostarczona",
+            "__v": 0
+        }
+    ]
+}
+```
+
+### POST paczki
+```js
+POST http://localhost:3000/paczki
+
+Expected Body:
+{
+    kodPaczki: String, 
+    kurier: {
+	kurierId: "534563456345e63456"
+        ref: "Kurier" 
+    },
+    paczkomat: {
+	paczkomatId: "4524456576889667467"
+        ref: "Paczkomat" 
+    },
+    status: String 
+}
+Expected Response: returns object of created kurierzy in database 
+
+{
+    "wiadomość": "Nowy kurier został dodany!",
+    "kurier": {
+        "_id": "678819627e7d7c268866b9cc",
+        "__v": 0,
+	imie: "Ania", //przykład
+	nazwisko: "Kowalska",
+    }
+}
+```
+
+### PUT paczki By ID
+```js
+PUT http://localhost:3000/paczki
+
+{
+    "wiadomość": "Nie odnaleziono"
+}
+
+Expected Response: updates campaign specified by :id
+
+PUT http://localhost:3000/paczki/id
+{
+    "wiadomość": "Zaktualizowano paczke o numerze 677eef763fdb91fe83c2cca0",
+    "updatedPaczka": {
+        "_id": "677eef763fdb91fe83c2cca0",
+        "kodPaczki": "123",
+        "kurier": "677eecaf3fdb91fe83c2cc83",
+        "paczkomat": "677eed933fdb91fe83c2cc8b",
+        "status": "dostarczona",
+        "__v": 0
+    }
+}
+
+```
+
+### DELETE paczki by ID
+```js
+DELETE  http://localhost:3000/paczki/id
 
 Expected Response: deletes campaign specified by :id
 
 Expected Response: 
     {
-        "deleted": 1
-    }
-```
-### GET users
-```js
-GET /api/users
-
-Expected Response: returns array of all users
-
-Expected Response: 
-[
-    {
-        "id": 1,
-        "username": "nicopico",
-        "email": "chiku524@icloud.com",
-        "age": 25,
-        "password": "$2a$15$V.9IqAyj.cOEktdkjBd62OUH9J2ylz80KAerUB9pFcysi7uspAGYy"
-    },
-    {
-        "id": 2,
-        "username": "testing",
-        "email": "testing@gmail.com",
-        "age": 25,
-        "password": "$2a$15$olkyTbtgk25E6onHRkAWwe4t8RSNv2kkRhMwj3dNFSAzOKbFxydkW"
-    }
-]
-```
-
-### GET User by user ID
-```js
-GET /api/users/:id
-
-Expected Response: returns stories created by user specified by :id
-
-Expected Response:
-    {
-        "id": 2,
-        "username": "testing",
-        "email": "testing@gmail.com",
-        "age": 25,
-        "password": "$2a$15$e9k2JvlYn.FF3ivK/qiCMewx/3OhtHO8Dwf755Pu7QlwQvQ7ixnxu"
-    }   
-```
-
-### Update User info
-```js
-PUT /api/users/:id/
-
-Expected Body:
-
-    {
-        "age": 100
-    }
-
-Expected Response:  updates user info specified by id
-Expected Response
-
-    {
-        "updated": 1
-    }
-```
-
-### Delete
-```js
-DELETE /api/users/:id
-
-Expected Response: deletes user specified by :id
-
-Expected Response: 
-    {
-        "removed": 1
-    }
-```
-
-## Metrics Endpoints
-### Post Metrics to DS API
-```js
-POST /api/campaigns/:id/metrics
-
-Expected Body:
-
-    {
-        "item": "going to make cars fly"
-    }
-
-Expected Response:  Prediction of success in a campaign based off of description
-Expected Response:
-
-{
-    "description": {
-        "item": "why is my description now showing up"
-    },
-    "prediction": {
-        "success_failure": "0"
-    },
-    "campaign_id": "2"
+    "wiadomość": "Usunięto paczke o numerze 677eef763fdb91fe83c2cca0"
 }
 ```
 
-<!-- ### Get All Stories by ID
-```js
-GET /api/stories/:id
-
-Expected Response: Lists stories specified by :id
-
-Expected Response:
-    {
-        "id": 1,
-        "storyName": "Chinatown",
-        "photoLink": "https://i.ibb.co/DVN5Lnx/20200322-213304.jpg",
-        "user_id": 1,
-        "stories_id": 1
-    }
-```
-
-### PUT Story by ID
-```js
-PUT /api/stories/:id
-
-Expected Body:
-    {
-        "storyName": "Updated Story Name" //updated field
-    }
-
-Expected Response: updates story specified by :id
-
-Expected Response:
-"story": [
-	        {
-		        "id": 5,
-		        "storyName": "Updated Story Name",
-		        "storyCity": "test23",
-		        "storyCountry": "Thailand",
-		        "storyDate": "2020-08-28 03:12:34",
-		        "storyPhoto": "test photo",
-		        "storyDesc": "testDesc",
-		        "user_id": 1
-			    }
-        ]
-```
-
-### DELETE Story by ID
-```js
-DELETE /api/stories/:id
-
-Expected Response: deletes story specified by :id
-
-Expected Response: 
-    {
-        "removed": 1
-    }
-```
-
-## Photos Endpoints
-### GET ALL Photos
-```js
-GET /api/photos
-
-Expected Response: List of photos in database
-
-Expected Response:
-[
-    {
-        "id": 1,
-        "photoLink": "https://i.ibb.co/DVN5Lnx/20200322-213304.jpg",
-        "photoDesc": "Out for dinner",
-        "photoDate": "2020-08-28T02:49:30.529Z",
-        "stories_id": 1
-    },
-    {
-        "id": 3,
-        "photoLink": "https://i.ibb.co/RTZNzfX/20200821-093310.jpg",
-        "photoDesc": "Enjoy a moment of relaxation in Pattaya",
-        "photoDate": "2020-08-28T02:49:30.529Z",
-        "stories_id": 3
-    }
-]
-```
-
-### GET Photos By ID
-```js
-GET /api/photos/:id
-
-### Expected Response: Photo that matches Users ID
-
-Expected Response
-    {
-        "id": 1,
-        "photoLink": "https://i.ibb.co/DVN5Lnx/20200322-213304.jpg",
-        "photoDesc": "Out for dinner",
-        "photoDate": "2020-08-28T02:49:30.529Z",
-        "stories_id": 1
-    }
-```
-
-### POST new photo
-```js
-POST /api/photos
-
-Expected Body:
