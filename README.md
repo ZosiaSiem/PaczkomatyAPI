@@ -3,12 +3,9 @@
 - **[Installing](#installing)**<br>
 - **[Overview](#overview)**<br>
 - **[Back-end](#back-end)**<br>
-- **[API Endpoints](#api-endpoints)**<br>
-- **[Register Endpoint](##register-endpoint)**<br>
-- **[Login Endpoint](##login-endpoint)**<br>
-- **[Logout Endpoint](##logout-endpoint)**<br>
-- **[Campaign Endpoints](##campaign-endpoint)**<br>
-- **[Metrics Endpoints](##metrics-endpoints)**<br>
+- **[Kurier Endpoints](#kurier-endpoints)**<br>
+- **[Paczkomaty Endpoint](##paczkomaty-endpoint)**<br>
+- **[Paczki Endpoint](##paczki-endpoint)**<br>
 
 # backend-api
 Back-end REST API
@@ -27,16 +24,16 @@ A step by step series of examples that tell you how to get a development environ
 2. Open terminal and install dependencies:
    - npm install
 3. Create file .env and write:
-   DB_USER= <yourname>
-   DB_PASSWORD= <yourpassword>
-   DB_NAME= <databasename>
-   JWT_KEY= <secret>
+   - DB_USER= yourname
+   - DB_PASSWORD= yourpassword
+   - DB_NAME= databasename
+   - JWT_KEY= secret
 4. Create connection to your database
 5. Then launch the api with: 
 nodemon server.js
 
 # Overview
-- The application allows you to manage parcel lockers, parcels, and couriers. Users can create, edit, and delete parcel lockers, parcels, and assign couriers. The system provides easy tracking of parcels and organizing their delivery.
+The application allows you to manage parcel lockers, parcels, and couriers. Users can create, edit, and delete parcel lockers, parcels, and assign couriers. The system provides easy tracking of parcels and organizing their delivery.
   <strong>Functioncs:</strong>
   - Creating and managing parcel lockers
   - Creating and managing parcels
@@ -64,81 +61,74 @@ Use Base URL: http://localhost:3000/
 Register & Login 
 | Method | Route                  | Description                                      |
 |--------|------------------------|--------------------------------------------------|
-| POST   | /api/auth/register     | registers new users                              |
-| POST   | /api/auth/login        | logins into user account                         |
-| GET    | /api/auth/logout       | logs out of user account                         |
+| POST   | /users/signup          | registers new users                              |
+| POST   | /users/login           | logins into user account                         |
 
-Campaigns
+Kurierzy
 | Method | Route                  | Description                                      |
 |--------|------------------------|--------------------------------------------------|
-| GET    | /api/campaigns         | returns array of campaigns in database           |
-| GET    | /api/campaigns/:id     | returns campaigns specified by :id  --NOT READY  |
-| PUT    | /api/campaigns/:id     | updates campaign specified by :id                |
-| POST   | /api/campaigns         | creates & returns new campaign                   |
-| DELETE | /api/campaigns/:id     | deletes campaign specified by :id                |
+| GET    | /kurierzy              | returns array of kurierzy in database            |
+| GET    | /kurierzy/:id          | returns kurierzy specified by :id                |
+| PUT    | /kurierzy/:id          | updates kurier specified by :id                  |
+| POST   | /kurierzy              | creates & returns new kurier                     |
+| DELETE | /kurierzy/:id          | deletes kurier specified by :id                  |
 
-
-Users
-| Method | Route                  | Description                                      |
-|--------|------------------------|--------------------------------------------------|
-| GET    | /api/users             | returns array of users                           |
-| GET    | /api/users/:id         | returns user specified by :id                    |
-| PUT    | /api/users/:id         | updates user specified by :id                    |
-| DELETE | /api/user/:id          | deletes user specified by :id                    |
-
-Metrics
+Paczkomaty
 | Method | Route                      | Description                                  |
 |--------|----------------------------|----------------------------------------------|
-| POST   | /api/campaigns/:id/metrics | returns array of photos                      |
-<!-- | GET    | /api/photos/:id       | returns photos specified by :id                   |
-| POST   | /api/photos           | creates & returns new story                       |
-| PUT    | /api/photos/:id       | updates photos specified by :id                   |
-| DELETE | /api/photos/:id       | deletes photos specified by :id                   | -->
+| GET    | /paczkomaty                | returns array of paczkomaty                  |
+| GET    | /paczkomaty/:id            | returns array of paczkomat by ID             |
+| GET    | /paczkomaty/:id/paczki     | returns array of paczki in paczkomat         |
+| post   | /paczkomaty                | creates & returns new paczkomat              |
+| PUT    | /paczkomaty/:id            | updates paczkomat specified by :id           |
+| DELETE | /paczkomaty/:id            | deletes paczkomat specified by :id           | 
 
+Paczki
+| Method | Route                      | Description                                  |
+|--------|----------------------------|----------------------------------------------|
+| GET    | /paczki                    | returns array of paczki                      |
+| GET    | /paczki/:id                | returns array of paczka by ID                |
+| post   | /paczki                    | creates & returns new paczka                 |
+| PUT    | /paczki/:id                | updates paczkomat specified by :id           |
+| DELETE | /paczki/:id                | deletes paczkomat specified by :id           | 
 
 ## Register Endpoint
 ```js
-POST /api/auth/register
+POST /users/signup 
 ```
 Expected Body 
 ```js
     {
-    "username": "new_user", // string, unique, required
+    "email": "example@gmail.com", // string, unique, required
     "password": "password", // string, required
-    "age": 18, // integer, required
-    "email": "JaneDoe@gmail.com" // string, unique, required
     }
 ```
 
 Expected Response
 ```js
-    {
-        "id": 4,
-        "username": "new_user",
-        "password": "$2a$08$Sp/WntMm7eAZnDn3tp40tOAp77T8CTMUel8bqZGD3CoJcuSrH.NZ6",
-        "email": "JaneDoe@gmail.com",
-        "age": 18
-    }
+{
+    "wiadomosc": "Dodano uzytkownika"
+}
 ```
 
 ## Login Endpoint
 ```js
-POST /api/auth/login
+POST /users/login 
 ```
 Expected Body
 ```js
 {
-    "username": "test_user",
-    "password": "password"
+    "email: "example@gmail.com",
+    "password": "example123"
 }
 ```
 Expected Response
 ```js
 {
-    "message": "Welcome test_user",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMiwidXNlcm5hbWUiOiJuZXdfdXNlcjEyMTIxMiIsImlhdCI6MTU5ODQyMDg0NywiZXhwIjoxNTk4NDI4MDQ3fQ.YyR_rrRxYaDVTt3FPM155hPwbUAEFhyaDSOWqVOD8kM"
 }
 ```
+
 
 ## Kurier Endpoints
 ### GET All kurierzy
@@ -230,7 +220,7 @@ Expected Response:
 }
 ```
 
-## paczkomaty Endpoints
+## Paczkomaty Endpoints
 ### GET All paczkomaty
 ```js
 GET http://localhost:3000/paczkomaty
@@ -345,7 +335,7 @@ Expected Response:
 }
 ```
 
-## paczki Endpoints
+## Paczki Endpoints
 ### GET All paczki
 ```js
 GET http://localhost:3000/paczki
@@ -464,4 +454,3 @@ Expected Response:
     "wiadomość": "Usunięto paczke o numerze 677eef763fdb91fe83c2cca0"
 }
 ```
-
