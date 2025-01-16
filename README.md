@@ -32,7 +32,7 @@ A step by step series of examples that tell you how to get a development environ
    DB_NAME= <databasename>
    JWT_KEY= <secret>
 4. Create connection to your database
-5.Then launch the api with: 
+5. Then launch the api with: 
 nodemon server.js
 
 # Overview
@@ -158,32 +158,46 @@ Expected Response: returns array of kurierzy in database
     ]
 }
 ```
+### GET kurierzy By ID
+```js
+GET http://localhost:3000/kurierzy/id
 
+Expected Response: returns kurier specified by :id
+{
+    "wiadomość": "Szczegóły kuriera o numerze 678901eab062a8f63436b040",
+    "kurier": {
+        "_id": "678901eab062a8f63436b040",
+        "imie": "Maciek",
+        "nazwisko": "Łomża",
+        "__v": 0
+    }
+}
+```
 ### POST kurierzy
 ```js
 POST http://localhost:3000/kurierzy
 
 Expected Body: 
 {
-    imie: String,
-    nazwisko: String
+    "imie": "Jan", //name example
+    "nazwisko": "Kowalski" //surname example
 })
 Expected Response: returns object of created kurierzy in database 
 
 {
     "wiadomość": "Nowy kurier został dodany!",
     "kurier": {
-        "_id": "678819627e7d7c268866b9cc",
-        "__v": 0,
-	imie: "Ania", //name example
-	nazwisko: "Kowalska", //surname example
+        "_id": "678819627e7d7c268866b9cc"
+	imie: "Jan", //name example
+	nazwisko: "Kowalski", //surname example
+	"__v": 0,
     }
 }
 ```
 
 ### PUT kurierzy By ID
 ```js
-PUT http://localhost:3000/kurierzy/677eecaf3fdb91fe83c2cc83
+PUT http://localhost:3000/kurierzy
 
 {
     "wiadomość": "Nie odnaleziono"
@@ -235,16 +249,51 @@ Expected Response: returns array of paczkomaty in database
     ]
 }
 ```
+### GET paczkomat by ID
+```js
+GET http://localhost:3000/paczkomaty/id
 
+Expected Response: returns paczkomat specified by :id
+{
+    "wiadomość": "Szczegóły paczkomatu o numerze 677eed933fdb91fe83c2cc8b",
+    "paczkomat": {
+        "_id": "677eed933fdb91fe83c2cc8b",
+        "miasto": "Płock",
+        "adres": "Klonowa 1",
+        "pojemnosc": 20,
+        "__v": 0
+    }
+}
+```
+
+### GET paczki in paczkomat
+```js
+GET http://localhost:3000/paczkomaty/id/paczki
+
+Expected Response: returns paczki in paczkomat
+{
+    "wiadomość": "Lista paczek dostarczonych do paczkomatu 677eed933fdb91fe83c2cc8b",
+    "paczki": [
+        {
+            "_id": "677eef763fdb91fe83c2cca0",
+            "kodPaczki": "123",
+            "kurier": "677eecaf3fdb91fe83c2cc83",
+            "paczkomat": "677eed933fdb91fe83c2cc8b",
+            "status": "dostarczona",
+            "__v": 0
+        }
+    ]
+}
+```
 ### POST paczkomaty
 ```js
 POST http://localhost:3000/paczkomaty
 
 Expected Body: 
 {
-    miasto: String,
-    adres: String,
-    pojemnosc: Number
+    "miasto": "Puck",
+    "adres": "Wolna",
+    "pojemnosc": "10"
 }
 Expected Response: returns object of created kurierzy in database 
 
@@ -320,7 +369,7 @@ Expected Response: returns array of paczki in database
         {
             "_id": "677f7827382767cc994affd0",
             "kodPaczki": "ABC123",
-            "kurier": null,
+            "kurier": "",
             "paczkomat": {
                 "_id": "677eed933fdb91fe83c2cc8b",
                 "miasto": "Płock",
@@ -332,6 +381,26 @@ Expected Response: returns array of paczki in database
     ]
 }
 ```
+### GET paczki by ID
+```js
+GET http://localhost:3000/paczki/id
+
+Expected Response: returns paczki specified by :ID
+{
+    "wiadomość": "Szczegóły paczki o numerze 678905b3b062a8f63436b057",
+    "paczka": {
+        "_id": "678905b3b062a8f63436b057",
+        "kodPaczki": "ABC123",
+        "kurier": {
+            "_id": "678901eab062a8f63436b040",
+            "imie": "Maciek",
+            "nazwisko": "Łomża"
+        },
+        "status": "dostarczona",
+        "__v": 0
+    }
+}
+```
 
 ### POST paczki
 ```js
@@ -339,26 +408,22 @@ POST http://localhost:3000/paczki
 
 Expected Body:
 {
-    kodPaczki: String, 
-    kurier: {
-	kurierId: "534563456345e63456"
-        ref: "Kurier" 
-    },
-    paczkomat: {
-	paczkomatId: "4524456576889667467"
-        ref: "Paczkomat" 
-    },
-    status: String 
+    "kodPaczki": "ABC123",
+    "kurierId": "678901eab062a8f63436b040",
+    "paczkomat": "677eed933fdb91fe83c2cc8b",
+    "status": "dostarczona"
+
 }
 Expected Response: returns object of created kurierzy in database 
 
 {
-    "wiadomość": "Nowy kurier został dodany!",
-    "kurier": {
-        "_id": "678819627e7d7c268866b9cc",
-        "__v": 0,
-	imie: "Ania", //przykład
-	nazwisko: "Kowalska",
+    "wiadomość": "Nowa przesyłka została dodana!",
+    "paczka": {
+        "_id": "6789065bb062a8f63436b067",
+        "kodPaczki": "ABC123",
+        "kurier": "678901eab062a8f63436b040",
+        "status": "dostarczona",
+        "__v": 0
     }
 }
 ```
