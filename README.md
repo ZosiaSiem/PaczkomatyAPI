@@ -4,8 +4,8 @@
 - **[Overview](#overview)**<br>
 - **[Back-end](#back-end)**<br>
 - **[Kurier Endpoints](#kurier-endpoints)**<br>
-- **[Paczkomaty Endpoint](#paczkomaty-endpoint)**<br>
-- **[Paczki Endpoint](#paczki-endpoint)**<br>
+- **[Paczkomaty Endpoint](#paczkomaty-endpoints)**<br>
+- **[Paczki Endpoint](#paczki-endpoints)**<br>
 
 # backend-api
 Back-end REST API
