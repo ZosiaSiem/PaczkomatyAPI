@@ -1,14 +1,14 @@
 ## Table of Contents
-- **[Getting Started](#getting-started)<br>
-- **[Installing](#installing)<br>
-- **[Overview](#overview)<br>
-- **[Back-end](#back-end)<br>
-- **[API Endpoints](#api-endpoints)<br>
-- **[Register Endpoint](#register-endpoint)<br>
-- **[Login Endpoint](#login-endpoint)<br>
-- **[Kurier Endpoint](#kurier-endpoints)<br>
-- **[Paczkomaty Endpoints](#paczkomaty-endpoints)<br>
-- **[Paczki Endpoints](#paczki-endpoints)<br>
+- **[Getting Started](#getting-started)**<br>
+- **[Installing](#installing)**<br>
+- **[Overview](#overview)**<br>
+- **[Back-end](#back-end)**<br>
+- **[API Endpoints](#api-endpoints)**<br>
+- **[Register Endpoint](#register-endpoint)**<br>
+- **[Login Endpoint](#login-endpoint)**<br>
+- **[Kurier Endpoint](#kurier-endpoints)**<br>
+- **[Paczkomaty Endpoints](#paczkomaty-endpoints)**<br>
+- **[Paczki Endpoints](#paczki-endpoints)**<br>
 # backend-api
 Back-end REST API
 
